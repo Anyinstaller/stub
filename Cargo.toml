@@ -1,0 +1,59 @@
+[package]
+name = "anyinstaller-stub"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+description = "The AIP v1 stub: validates, extracts, launches, and relays an Anyinstaller package"
+license = "MIT"
+
+[[bin]]
+name = "stub"
+path = "src/main.rs"
+
+[[bin]]
+name = "aip-dev-child"
+path = "src/bin/aip-dev-child.rs"
+required-features = ["dev"]
+
+[lib]
+name = "anyinstaller_stub"
+path = "src/lib.rs"
+
+[features]
+default = []
+# Development only. Skips Authenticode verification and allows
+# --aip-dev-package <path>. Never enable this for a release build.
+dev = []
+
+[dependencies]
+anyhow = "1"
+getrandom = "0.3"
+sha2 = "0.10"
+toml = "0.8"
+windows = { version = "0.62", features = [
+  "Win32_Foundation",
+  "Win32_Security",
+  "Win32_Security_Authorization",
+  "Win32_Security_Cryptography",
+  "Win32_Security_WinTrust",
+  "Win32_Storage_FileSystem",
+  "Win32_System_Com",
+  "Win32_System_Environment",
+  "Win32_System_IO",
+  "Win32_System_JobObjects",
+  "Win32_System_LibraryLoader",
+  "Win32_System_Pipes",
+  "Win32_System_SystemInformation",
+  "Win32_System_Threading",
+  "Win32_UI_Shell",
+  "Win32_UI_WindowsAndMessaging",
+] }
+
+[dev-dependencies]
+tempfile = "3"
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = "symbols"

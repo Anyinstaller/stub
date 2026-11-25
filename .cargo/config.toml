@@ -1,0 +1,4 @@
+# Enable Control Flow Guard for every Rust crate in the stub. ASLR, DEP, and
+# high-entropy VA are already enabled by the x86_64 MSVC target.
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "control-flow-guard=yes"]
